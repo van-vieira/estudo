@@ -1,1 +1,94 @@
-<p>pagina-inicial works!</p>
+<div class="create-vm-container">
+  <div class="header-bar">
+    <div class="logo">LOGO</div>
+  </div>
+
+  <div class="main-content">
+    
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="#"><i class="fas fa-th-large"></i> Dashboard</a></li>
+          <li class="active"><a href="#"><i class="fas fa-desktop"></i> Máquinas</a></li>
+          <li><a href="#"><i class="fas fa-hdd"></i> Discos</a></li>
+          <li><a href="#"><i class="fas fa-cloud"></i> Rede</a></li>
+          <li><a href="#"><i class="fas fa-users"></i> Usuários</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content-area">
+      <div class="form-card">
+        <h1 class="page-title">Criar nova máquina virtual</h1>
+
+        <div class="form-group full-width">
+          <label for="vmName">Nome da máquina</label>
+          <input 
+            type="text" 
+            id="vmName" 
+            [value]="vmConfig().name" 
+            (input)="updateVmConfig('name', $event)"  
+            placeholder=""
+          >
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="os">Sistema Operacional</label>
+            <select id="os" [value]="vmConfig().os" (change)="updateVmConfig('os', $event)"> <option value="ubuntu">Ubuntu</option>
+              <option value="windows">Oracle Linux 9</option>
+              <option value="centos">Linux Rocky 9.5</option>
+              <option value="centos">Linux Mint</option>
+            </select>
+          </div>
+          <div class="form-group half-width">
+            <label for="size">Tamanho</label>
+            <select id="size" [value]="vmConfig().sizePreset" (change)="updateVmConfig('sizePreset', $event)"> @for (size of sizeOptions; track size.value) {
+                <option [value]="size.value">{{ size.label }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          
+    
+        </div>
+
+        <div class="form-group full-width radio-group">
+          <label>Rede</label>
+          <div class="radio-options">
+            <label class="radio-label">
+              <input 
+                type="radio" 
+                name="networkType" 
+                value="public" 
+                [checked]="vmConfig().networkType === 'public'" 
+                (change)="updateVmConfig('networkType', $event)" >
+              Público
+            </label>
+            <label class="radio-label">
+              <input 
+                type="radio" 
+                name="networkType" 
+                value="private" 
+                [checked]="vmConfig().networkType === 'private'" 
+                (change)="updateVmConfig('networkType', $event)" >
+              Privado
+            </label>
+          </div>
+        </div>
+
+        <div class="actions full-width">
+          <button 
+            class="btn btn-primary" 
+            (click)="createVm()" 
+            [disabled]="!isFormValid()"
+          >
+            Criar Máquina
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
